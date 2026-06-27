@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ToneMinder | Contact Ringtone App</title>
+  <meta name="description" content="ToneMinder is an Android app that helps you create unique ringtones for individual contacts.">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --text: #e5e7eb;
+      --muted: #a7b0c0;
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --card: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(6, 182, 212, 0.25), transparent 34rem),
+        radial-gradient(circle at top right, rgba(124, 58, 237, 0.25), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      width: min(1040px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header { padding: 28px 0; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      font-size: 1.15rem;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      color: white;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 0.95rem;
+    }
+
+    .nav a:hover { color: var(--text); }
+
+    .hero {
+      padding: 72px 0 64px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: #67e8f9;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      font-size: clamp(1.08rem, 2vw, 1.3rem);
+      color: var(--muted);
+      max-width: 660px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid var(--border);
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      color: white;
+      border-color: transparent;
+    }
+
+    .button.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .phone-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      padding: 22px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+    }
+
+    .screen {
+      border-radius: 26px;
+      background: #050816;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 22px;
+      min-height: 430px;
+    }
+
+    .screen-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .contact {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      flex: 0 0 auto;
+    }
+
+    .contact strong {
+      display: block;
+      font-size: 0.98rem;
+    }
+
+    .contact span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .tone {
+      margin-left: auto;
+      color: #67e8f9;
+      font-weight: 700;
+    }
+
+    .section { padding: 58px 0; }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 0 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      min-height: 180px;
+    }
+
+    .card .icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .support-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .support-box p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 38px 0 52px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 34px;
+      font-size: 0.92rem;
+    }
+
+    footer a { color: var(--text); }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 42px;
+      }
+
+      .grid { grid-template-columns: 1fr; }
+
+      .support-box { grid-template-columns: 1fr; }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav a {
+        margin-left: 0;
+        margin-right: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">♪</div>
+        <span>ToneMinder</span>
+      </div>
+      <nav aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#support">Support</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow">Personal contact tones</div>
+        <h1>Know who is calling by the sound.</h1>
+        <p class="lead">
+          ToneMinder helps you create unique ringtones for individual Android contacts, so the people who matter can have a sound of their own.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="mailto:toneminder@gmail.com">Contact Support</a>
+          <a class="button secondary" href="#privacy">Privacy Policy</a>
+        </div>
+      </div>
+
+      <div class="phone-card" aria-label="ToneMinder app preview illustration">
+        <div class="screen">
+          <div class="screen-top">
+            <strong>ToneMinder</strong>
+            <span>Assigned</span>
+          </div>
+          <div class="contact">
+            <div class="avatar"></div>
+            <div>
+              <strong>Family</strong>
+              <span>Bright • Pulse</span>
+            </div>
+            <div class="tone">♪</div>
+          </div>
+          <div class="contact">
+            <div class="avatar"></div>
+            <div>
+              <strong>Work</strong>
+              <span>Mellow • Cascade</span>
+            </div>
+            <div class="tone">♫</div>
+          </div>
+          <div class="contact">
+            <div class="avatar"></div>
+            <div>
+              <strong>Friend</strong>
+              <span>Classic • Bouncy</span>
+            </div>
+            <div class="tone">♪</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="wrap section">
+      <h2>Simple, personal, and practical.</h2>
+      <p class="section-intro">
+        ToneMinder is built around one practical idea: assign recognizable sounds to individual contacts without hunting for ringtone files manually.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <div class="icon">👤</div>
+          <h3>Contact-based tones</h3>
+          <p>Create and assign tones for specific people in your Android contacts.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">🎵</div>
+          <h3>Generated melodies</h3>
+          <p>Generate short ringtone melodies designed for quick recognition.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">🔁</div>
+          <h3>Preview and update</h3>
+          <p>Preview a tone, assign it, and update it later when you want a different sound.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="support" class="wrap section">
+      <div class="support-box">
+        <div>
+          <h2>Support</h2>
+          <p>
+            Questions, feedback, or support requests can be sent by email.
+          </p>
+        </div>
+        <a class="button primary" href="mailto:toneminder@gmail.com">toneminder@gmail.com</a>
+      </div>
+    </section>
+
+    <section id="privacy" class="wrap section">
+      <h2>Privacy Policy</h2>
+      <p class="section-intro">
+        ToneMinder uses contact access so you can select contacts and assign custom ringtones. A full privacy policy will be posted here before public release.
+      </p>
+      <p class="section-intro">
+        ToneMinder does not sell personal data. More detailed privacy and data handling information will be added before the app is published.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>&copy; 2026 ToneMinder. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
